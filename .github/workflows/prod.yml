@@ -39,6 +39,10 @@ jobs:
           # Note: using double quotes so $GITHUB_SHA is substituted by shell,
           # which won't happen inside single quotes.
           sed -i "s|image: piyush1008/todo-app-next:.*|image: piyush1008/todo-app-next:${GITHUB_SHA}|" frontendmanifest.yml
+          
+          # Ensure we are on the main branch before pushing. Create it if it doesn't exist.
+          git branch | grep main || git checkout -b main
+          git checkout main
 
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
