@@ -26,13 +26,13 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: piyush1008/todo-app-next:${{ github.sha }}
-          
+
       - name: Clone staging-ops repo, update, and push
         env:
           PAT: ${{ secrets.PAT }}
         run: |
           git clone https://github.com/piyush1008/argocd-rev
-          sed -i 's|image: piyush-1008/todo-next-app:.*|image: piyush-1008/todo-next-app:${{ github.sha }}|' frontendmanifest.yml
+          sed -i 's|image: piyush-1008/todo-app-next:.*|image: piyush-1008/todo-app-nex:${{ github.sha }}|' frontendmanifest.yml
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add frontendmanifest.yml
