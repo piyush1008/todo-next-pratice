@@ -33,6 +33,7 @@ jobs:
         run: |
           git clone https://github.com/piyush1008/argocd-rev
           cd argocd-rev
+          ls
           sed -i 's|image: piyush-1008/todo-app-next:.*|image: piyush-1008/todo-app-next:${{ github.sha }}|' frontendmanifest.yml
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
