@@ -31,12 +31,17 @@ jobs:
         env:
           PAT: ${{ secrets.PAT }}
         run: |
-          git clone https://github.com/piyush1008/argocd-rev
+          git clone https://github.com/piyush1008/argocd-rev.git
           cd argocd-rev
           ls
-          sed -i 's|image: piyush-1008/todo-app-next:*|image: piyush-1008/todo-app-next:${{ github.sha }}|' frontendmanifest.yml
+
+          # Safely substitute the image tag in frontendmanifest.yml.
+          # Note: using double quotes so $GITHUB_SHA is substituted by shell,
+          # which won't happen inside single quotes.
+          sed -i "s|image: piyush1008/todo-app-next:.*|image: piyush1008/todo-app-next:${GITHUB_SHA}|" frontendmanifest.yml
+
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add frontendmanifest.yml
-          git commit -m "Update todonext-app image to ${{ github.sha }}"
+          git commit -m "Update todonext-app image to ${GITHUB_SHA}" || echo "No changes to commit."
           git push https://${PAT}@github.com/piyush1008/argocd-rev.git main
