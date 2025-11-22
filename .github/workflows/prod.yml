@@ -23,7 +23,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: .
+          file: ./Dockerfile
           push: true
           tags: piyush1008/todo-app-next:${{ github.sha }}
 
